@@ -24,7 +24,7 @@ Environments where the extrinsic rewards are sparsely observed are harder to exp
 
 This repository is developed on Linux 64-bit in Python 3.7 using [(Mini)conda](https://conda.io/miniconda.html).
 
-To instanciate the conda environment, run ``conda env create --file conda-env.txt``.
+To instanciate the conda environment, run ``conda env create --file conda-env.txt --name rl``.
 
 Then use pip to install the required Python packages: ``pip -r requirements.txt``.
 
