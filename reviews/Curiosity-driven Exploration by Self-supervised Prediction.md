@@ -1,9 +1,10 @@
 
+
 # Curiosity-driven Exploration by Self-supervised Prediction
 
-[arXiv](https://arxiv.org/pdf/1705.05363.pdf)
-[implementations](https://github.com/pathak22/noreward-rl)
-[demo](https://www.youtube.com/watch?v=J3FHOyhUn3A)
+* [arXiv](https://arxiv.org/pdf/1705.05363.pdf)
+* [implementations](https://github.com/pathak22/noreward-rl)
+* [demo](https://www.youtube.com/watch?v=J3FHOyhUn3A)
 
 ## TLDR
 
@@ -15,7 +16,7 @@ They aim at showing that curiosity as intrinsic rewards can not only help for ta
 * help to continuously learn efficient exploratory policies that are specific to the environment,
 * provide useful skills that are generalizable to other similar environments.
 
-They also aim at introducing ICM (Intrinsic Curiosity Module), that is able to generate intrinsic rewards $r_i$ that have useful properties.
+They also aim at introducing ICM (Intrinsic Curiosity Module), that is able to generate intrinsic rewards $r_i$ that have useful properties. ICM also scales well to high dimensional visual inputs.
 
 ## Methods
 
@@ -32,10 +33,13 @@ They give as an illustration of ICM that an agent should try to predict the cons
 ## Technical details
 
 The *inverse dynamic model* $g$ optimizes feature representations (function $\phi$ "hidden" in $g$) to then predict the action: 
-$$\hat{a_t} = g(s_t,s_{t+1}|\theta_I)$$$$\underset{\theta_I}{min}\,\text{cross\_entropy}(a_t,\hat{a_t})$$
+$$\hat{a_t} = g(s_t,s_{t+1};\theta_I)$$
+$$\underset{\theta_I}{min}\,\text{cross\_entropy}(a_t,\hat{a_t})$$
 
 The *forward model* $f$ is used to compute the intrinsic reward $r_t^i$:
-$$\hat{\phi}(s_{t+1}) = f(\phi(s_t),a_t|\theta_F)$$$$\underset{\theta_F}{min}\,L_2(\hat{\phi}(s_{t+1}),\phi(s_{t+1}))$$$$r_t^i=\eta L_2(\hat{\phi}(s_{t+1}),\phi(s_{t+1}))$$
+$$\hat{\phi}(s_{t+1}) = f(\phi(s_t),a_t;\theta_F)$$
+$$\underset{\theta_F}{min}\,L_2(\hat{\phi}(s_{t+1}),\phi(s_{t+1}))$$
+$$r_t^i=\eta L_2(\hat{\phi}(s_{t+1}),\phi(s_{t+1}))$$
 
 In experiments, they used asynchronous versions of the A3C-based agents, with 20 parallel workers.
 
@@ -75,19 +79,21 @@ A3C+ICM can learn in environment where **no extrinsic reward** is given.
 
 Both environments studied are deterministic, so we have no clue if A3C+ICM would be robust to stochastic ones where the same sequence of actions could lead to different states. (Note that they add noise to the image in one experiment, but as stated, it does not impact the agent.)
 
+As mentioned, an obstacle in Mario level-3 requires a specific sequence of actions to be crossed. A3C-ICM may hit "a curiosity blockade" and be "unable to make any progress" at some point.
+
 ### thoughts
 
-Experiments suggest that A3C+ICM learns better policies (and new skills) when it is iteratively fine-tuned over increasingly difficult environments.
+Experiments suggest that A3C+ICM learns better policies (and new skills) when it is iteratively fine-tuned over increasingly difficult environments. (An exception of this is when generalizing from Level-1 to Level-3, where the agent performs better when run "as is", because of the obstacle mentioned above).
 
 In the experiments, they do not provide us with the distribution of observed number of steps needed to achieve the goals in VizDoom (it would be nice to compare these with the approx. 250 optimal steps).
 
+
 ## Top Figures
 
-> ![Figure N](./ressources/Paper/FigN.png "")
+> ![Figure 1](./ressources/curiosity-driven-fig1.png "")
+> ![Figure 2](./ressources/curiosity-driven-fig2.png "")
 
 ## Metadata
-
-> easily grep-able data: tags, reading depth
 
 ```
 @inproceedings{pathakICMl17curiosity,
@@ -101,3 +107,5 @@ In the experiments, they do not provide us with the distribution of observed num
     Year = {2017}
 }
 ```
+
+Tags: Reinforcement Learning ICM Intrinsic Curiosity Module A3C efficient exploration skill generalize Transfer Learning sparse rewards Mario VizDoom 
