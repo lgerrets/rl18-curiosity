@@ -28,4 +28,4 @@ To instanciate the conda environment, run ``conda create --file conda-env.txt --
 
 Then use pip to install the required Python packages: ``pip install -r requirements.txt``.
 
-To work on Jupyter notebook or Jupyter lab you will need to install it via pip. Follow the instructions [here](https://anbasile.github.io/programming/2017/06/25/jupyter-venv/) to make the environment kernel available in your jupyter installation.
+To work on Jupyter notebook or Jupyter lab you will need to install it via pip. Follow the instructions [here](https://anbasile.github.io/programming/2017/06/25/jupyter-venv/) to make the environment kernel available in your jupyter installation. Suggested command: ``ipython kernel install --user --name=rl``
